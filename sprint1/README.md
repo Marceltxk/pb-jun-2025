@@ -21,7 +21,9 @@ Criei uma VPC com o bloco CIDR `10.0.0.0/16`, contendo:
 - **Tabela de rotas públicas** configurada para redirecionar o tráfego `0.0.0.0/0` para o Internet Gateway
 
 ### 📸 Print: Criação da VPC, sub-redes e gateway  
+![Minha Imagem](imgs/VPC.png)
 ![Minha Imagem](imgs/img01.png)
+![Minha Imagem](imgs/IGW.png)
 
 ---
 
@@ -38,6 +40,9 @@ Criei uma VPC com o bloco CIDR `10.0.0.0/16`, contendo:
 
 ### 📸 Print: Configuração da EC2  
 _(Inserir print do painel de criação da EC2 e security group)_
+![Minha Imagem](imgs/name_tag.png)
+![Minha Imagem](imgs/network.png)
+![Minha Imagem](imgs/network2.png)
 
 ---
 
@@ -60,7 +65,7 @@ sudo chkconfig nginx on
 
 ### 🔸 Página HTML personalizada
 
-Substituí a página padrão do Nginx por:
+Substituí a página padrão do Nginx pelo arquivo index.html:
 
 ```bash
 echo "<h1>Projeto PB - JUN 2025</h1><p>Servidor rodando com Nginx na AWS!</p>" | sudo tee /usr/share/nginx/html/index.html
