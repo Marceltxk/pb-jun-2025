@@ -1,7 +1,7 @@
 
 # Projeto PB - JUN 2025: Servidor Web com Monitoramento na AWS
 
-![Minha Imagem](/imgs/logo.jpg)
+![Minha Imagem](imgs/logo.jpg)
 
 ## 👨‍💻 Objetivo
 
