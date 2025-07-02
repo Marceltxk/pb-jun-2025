@@ -21,7 +21,7 @@ Criei uma VPC com o bloco CIDR `10.0.0.0/16`, contendo:
 - **Tabela de rotas públicas** configurada para redirecionar o tráfego `0.0.0.0/0` para o Internet Gateway
 
 ### 📸 Print: Criação da VPC, sub-redes e gateway  
-![Minha Imagem](imgs/img01.jpg)
+![Minha Imagem](imgs/img01.png)
 
 ---
 
