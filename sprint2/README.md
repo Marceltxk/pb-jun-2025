@@ -65,16 +65,16 @@ sudo chkconfig nginx on
 
 ### 🔸 Página HTML personalizada
 
-Substituí a página padrão do Nginx pelo arquivo index.html:
+Substituí a página padrão do Nginx pelo arquivo index.html que colei e salvei:
 
 ```bash
-echo "<h1>Projeto PB - JUN 2025</h1><p>Servidor rodando com Nginx na AWS!</p>" | sudo tee /usr/share/nginx/html/index.html
+sudo nano /usr/share/nginx/html/index.html
 ```
 
 A página pode ser acessada via IP público da instância.
 
 ### 📸 Print: Página acessível no navegador  
-_(Inserir print da página carregada no navegador)_
+![Minha Imagem](imgs/page.png)
 
 ---
 
@@ -82,33 +82,49 @@ _(Inserir print da página carregada no navegador)_
 
 ### 🔸 Objetivo
 
-Criar um script que verifica se o site está online a cada 1 minuto. Caso não esteja, envia uma notificação via [Telegram/Discord/Slack].
+Criar um script que verifica se o site está online a cada 1 minuto. Caso não esteja, envia uma notificação via Discord.
+
+
+### 🔸 Criei arquivo
+
+```bash
+nano monitor.sh
+```
 
 ### 🔸 Script em Bash (exemplo com curl)
 
 ```bash
 #!/bin/bash
 
-URL="http://<IP_DA_INSTANCIA>"
-LOG="/var/log/monitoramento.log"
-DISCORD_WEBHOOK="https://discord.com/api/webhooks/SEU_WEBHOOK_AQUI"
+LOGFILE="/home/ec2-user/monitoramento.log"
+URL="http://44.199.231.255"
+WEBHOOK_URL="https://discord.com/api/webhooks/meu_webhook"
 
 STATUS=$(curl -s -o /dev/null -w "%{http_code}" $URL)
-
 DATA=$(date '+%Y-%m-%d %H:%M:%S')
 
 if [ "$STATUS" -ne 200 ]; then
-  echo "$DATA - Site indisponível! Status: $STATUS" >> $LOG
-  curl -H "Content-Type: application/json" -X POST -d "{"content": "🚨 Site fora do ar! Status: $STATUS"}" $DISCORD_WEBHOOK
+    MENSAGEM="🚨 [$DATA] O site está FORA DO AR! Código HTTP: $STATUS"
+    echo "$MENSAGEM" >> "$LOGFILE"
+
+    curl -H "Content-Type: application/json" \
+         -X POST \
+         -d "{\"content\": \"$MENSAGEM\"}" \
+         "$WEBHOOK_URL"
 else
-  echo "$DATA - Site funcionando normalmente. Status: $STATUS" >> $LOG
+    echo "[$DATA] Site funcionando. Código: $STATUS" >> "$LOGFILE"
 fi
 ```
 
 ### 🔸 Permissão e teste
 
 ```bash
-sudo chmod +x /usr/local/bin/monitorar.sh
+sudo chmod +x monitorar.sh
+```
+
+
+```bash
+./monitorar.sh
 ```
 
 ### 🔸 Agendamento com cron
@@ -124,7 +140,7 @@ Adicione:
 ```
 
 ### 📸 Print: Logs em `/var/log/monitoramento.log`  
-_(Inserir print do log sendo gerado)_
+
 
 ---
 
@@ -136,7 +152,7 @@ _(Inserir print do log sendo gerado)_
 - O log foi registrado corretamente.
 
 ### 📸 Print: Teste com Nginx parado e alerta enviado  
-_(Inserir print do Discord/Telegram/Slack com alerta e do terminal com log)_
+
 
 ---
 
